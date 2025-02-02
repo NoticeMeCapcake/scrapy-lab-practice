@@ -1,4 +1,4 @@
-# Scrapy settings for spider_project project
+# Scrapy settings for books_crawler project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,18 +7,25 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "spider_project"
+BOT_NAME = "books_crawler"
 
-SPIDER_MODULES = ["spider_project.spiders"]
-NEWSPIDER_MODULE = "spider_project.spiders"
+SPIDER_MODULES = ["books_crawler.spiders"]
+NEWSPIDER_MODULE = "books_crawler.spiders"
+
+MONGO_URI = 'mongodb://root:password@localhost:27017/'
+MONGO_DATABASE = 'books_db'
+
+ITEM_PIPELINES = {
+    'books_crawler.pipelines.BooksPipeline': 1100,
+}
 
 FEEDS = {
-    'merchant_points_data.csv': {
+    'books_data.csv': {
         'format': 'csv',
         'encoding': 'utf8',
         'overwrite': True,
     },
-    'merchant_points_data.jsonlines': {
+    'books_data.jsonlines': {
         'format': 'jsonlines',
         'encoding': 'utf8',
         'overwrite': True,
@@ -27,9 +34,8 @@ FEEDS = {
 
 CLOSESPIDER_ITEMCOUNT = 1100
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "spider_project (+http://www.yourdomain.com)"
+#USER_AGENT = "books_crawler (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -60,13 +66,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    "spider_project.middlewares.SpiderProjectSpiderMiddleware": 543,
+#    "books_crawler.middlewares.BooksCrawlerSpiderMiddleware": 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    "spider_project.middlewares.SpiderProjectDownloaderMiddleware": 543,
+#    "books_crawler.middlewares.BooksCrawlerDownloaderMiddleware": 543,
 #}
 
 # Enable or disable extensions
@@ -78,7 +84,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    "spider_project.pipelines.SpiderProjectPipeline": 300,
+#    "books_crawler.pipelines.BooksCrawlerPipeline": 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

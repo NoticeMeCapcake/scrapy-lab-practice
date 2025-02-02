@@ -4,8 +4,6 @@ from ..items import MerchantPointItem
 class MerchantPointSpider(scrapy.Spider):
     name = "merchantpoint"
     start_urls = ['https://merchantpoint.ru/brands/']
-    max_items_count = 1000
-    items_count = 0
 
 
     def parse(self, response):
@@ -20,10 +18,6 @@ class MerchantPointSpider(scrapy.Spider):
         for brand_url in brand_urls:
             if brand_url:
                 yield response.follow(brand_url, callback=self.parse_brand)
-
-        if self.items_count >= 1000:
-            self.logger.info("Spider finished his job, he will rest now.")
-            return
 
         next_page_url = response.xpath('//a[@class="page-link"][contains(text(),"Вперед")]/@href').get()
         if next_page_url:
@@ -54,7 +48,6 @@ class MerchantPointSpider(scrapy.Spider):
         if not self.validate_required_fields(item):
             return
 
-        self.items_count += 1
         yield item
 
 
