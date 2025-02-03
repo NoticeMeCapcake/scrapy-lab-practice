@@ -28,5 +28,5 @@ class Book(BaseModel):
 def get_book(isbn: str = Query(..., description="ISBN книги")):
     book = collection.find_one({"isbn": isbn})
     if book is None:
-        raise HTTPException(status_code=405, detail="Book not found " + isbn)
+        raise HTTPException(status_code=404, detail="Book not found " + isbn)
     return book
